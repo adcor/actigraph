@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Graphy</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+		<style>
+			.legend {
+				font-size: 12px;
+			}
+			rect {
+				stroke-width: 2;
+			}
+		</style>
+	</head>
+	<body>
+		<form actiion="/activities" method="POST">
+			<p>Chart Name </p>
+			<input id="chtNam" type="text" name="Chart Name"/>
+			<p>Activity Name </p>
+			<input id="nam" type="text" name="Activity Name"/>
+			<p>Hours </p>
+			<input id="hours" type="number" name="Duration in Hours"/>
+			<button type="submit">Save</button>
+		</form>
+			<button type="rerender" id="dat">Add</button>
+			<button type="render" id="reset">Reset</button>
+			<button type="indicat" id="mongo">Mongo</button>
+			<select>
+				<option id="opt1">Opt 1</option>
+				<option id="opt2">Opt 2</option>
+			</select>
+			<div id="chart"><div>
+			<div id="chartTwo"><div>
+		<script >
+			var dataset = [];
+			var width = 360;
+			var height = 360;
+			var radius = Math.min(width, height) / 2;
+
+			var color = d3.scale.category20();
+
+			var svg = d3.select('#chart')
+				.append('svg')
+				.attr('width', width)
+				.attr('height', height)
+				.append('g')
+				.attr('id', "pic")
+				.attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+
+			var arc = d3.svg.arc()
+				.outerRadius(radius);
+
+			var pie = d3.layout.pie()
+				.value(function(d) { return d.duration; })
+				.sort(null);
+
+			
+			    
+			function addDat() {
+				var dPop = {};
+				dPop.activity = $(nam).val();
+				dPop.duration = Number($(hours).val());
+				dataset.push(dPop);
+				console.log(dataset);
+				
+				$(pic).children().remove();
+
+				var path = svg.selectAll('path')
+				.data(pie(dataset))
+				.enter()
+				.append('path')
+				.attr('d', arc)
+				.attr('fill', function(d, i) {
+					return color(d.data.activity)
+				});
+			}
+			function resetChart() {
+				dataset = [];
+				$(pic).children().remove();
+			}
+			var hell0 = app.locals.hello;
+			$(dat).click(addDat);
+			$(reset).click(resetChart);
+			$(mongo).click(hello);
+
+
+		</script>
+	</body>
+</html>
