@@ -52,8 +52,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);
 
-app.locals.expDat = require('./expDat');
-app.locals.hello = function() { console.log("hello") };
 
 
 app.post('/', function(req, res){
@@ -67,7 +65,7 @@ app.post('/', function(req, res){
 })
 
 
-
+app.post('/api')
 
 
 app.post('/activities', (req, res) => {
