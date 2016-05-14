@@ -5,7 +5,7 @@ var router = express.Router();
 //Models
 var Chart = require('../models/charts');
 
-/* GET users listing. */
+//chart
 Chart.methods(['get', 'put', 'post', 'delete']);
 Chart.register(router, '/charts')
 

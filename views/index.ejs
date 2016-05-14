@@ -15,14 +15,14 @@
 		</style>
 	</head>
 	<body>
-		<form actiion="/activities" method="POST">
+		<form actiion="./api/charts" id="myForm">
 			<p>Chart Name </p>
-			<input id="chtNam" type="text" name="Chart Name"/>
+			<input id="chtNam" type="text" name="chartName"/>
 			<p>Activity Name </p>
-			<input id="nam" type="text" name="Activity Name"/>
+			<input id="nam" type="text" name="activity"/>
 			<p>Hours </p>
-			<input id="hours" type="number" name="Duration in Hours"/>
-			<button type="submit">Save</button>
+			<input id="hours" type="text" name="duration"/>
+			<button id="save">Save</button>
 		</form>
 			<button type="rerender" id="dat">Add</button>
 			<button type="render" id="reset">Reset</button>
@@ -34,6 +34,13 @@
 			<div id="chart"><div>
 			<div id="chartTwo"><div>
 		<script >
+			
+			var $chartName = $(chtNam);
+			var $activityName = $(nam);
+			var $hours = $(hours);
+			var $chartTwo = $(chartTwo);
+
+
 			var dataset = [];
 			var width = 360;
 			var height = 360;
@@ -80,10 +87,39 @@
 				dataset = [];
 				$(pic).children().remove();
 			}
-			var hell0 = app.locals.hello;
+
+			$.ajax({
+				type: 'GET',
+				url: 'api/charts',
+				success: function(chartTwo) {
+					for(var i = 0; i <= chartTwo.length; i++){
+						if(chartTwo[i].chartName === "something"){
+							$chartTwo.append('<li>' + chartTwo[i].chartName + '</li>')
+						}
+					}
+				}
+			})
+			
+			$(save).on('click', function(){
+				var JSONObject = {"chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
+
+				$.ajax({
+					type: "POST",
+					url: 'api/charts',
+					dataType: 'json',
+					data: JSONObject,
+					success: function(newChart) {
+						console.log("We win");
+					},
+					error: function(){
+						alert('error posting');
+					}
+				});
+
+			});
 			$(dat).click(addDat);
 			$(reset).click(resetChart);
-			$(mongo).click(hello);
+
 
 
 		</script>
