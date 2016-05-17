@@ -27,10 +27,10 @@
 			<button type="rerender" id="dat">Add</button>
 			<button type="render" id="reset">Reset</button>
 			<button type="indicat" id="mongo">Mongo</button>
-			<select>
-				<option id="opt1">Opt 1</option>
-				<option id="opt2">Opt 2</option>
+			<select id="dropdown">
+
 			</select>
+			<button id="load">Load</button>
 			<div id="chart"><div>
 			<div id="chartTwo"><div>
 		<script >
@@ -39,7 +39,12 @@
 			var $activityName = $(nam);
 			var $hours = $(hours);
 			var $chartTwo = $(chartTwo);
-
+			//Dropdown Vars
+			var $dropdown = $(dropdown);
+			var namelist = [];
+			var optList = [];
+			//Load Graph Vars
+			var chartVals = [];
 
 			var dataset = [];
 			var width = 360;
@@ -64,16 +69,9 @@
 				.sort(null);
 
 			
-			    
-			function addDat() {
-				var dPop = {};
-				dPop.activity = $(nam).val();
-				dPop.duration = Number($(hours).val());
-				dataset.push(dPop);
-				console.log(dataset);
+			function mkPic() {
 				
 				$(pic).children().remove();
-
 				var path = svg.selectAll('path')
 				.data(pie(dataset))
 				.enter()
@@ -82,23 +80,68 @@
 				.attr('fill', function(d, i) {
 					return color(d.data.activity)
 				});
+			} 
+
+			function addDat() {
+				var dPop = {};
+				dPop.chartName = $(chtNam).val();
+				dPop.activity = $(nam).val();
+				dPop.duration = Number($(hours).val());
+				dataset.push(dPop);
+				console.log(dataset);
+				
+				mkPic();
+				
 			}
 			function resetChart() {
-				dataset = [];
+				dataset.length = 0;
 				$(pic).children().remove();
+			}
+
+
+			function dupLess(arr) {
+				var i,
+			        len=arr.length,
+				    obj={};
+
+				for (i=0;i<len;i++) {
+			    	obj[arr[i]]=0;
+			  	}
+			    for (i in obj) {
+			    	optList.push(i);
+			    }
+			}
+			function mkOpt(arr) {
+				for(var i = 0; i <= arr.length; i++) {
+					$(dropdown).append("<option>" + arr[i] + "</option>")
+				}
 			}
 
 			$.ajax({
 				type: 'GET',
 				url: 'api/charts',
-				success: function(chartTwo) {
-					for(var i = 0; i <= chartTwo.length; i++){
-						if(chartTwo[i].chartName === "something"){
-							$chartTwo.append('<li>' + chartTwo[i].chartName + '</li>')
-						}
+				success: function(chartdat) {
+					var i,
+					j,
+					k,
+				    obj={};
+
+					for(var i = 0; i <= chartdat.length - 1; i++){
+						console.log(namelist.push(chartdat[i].chartName));
 					}
+					for (j=0;j<namelist.length;j++) {
+			    		console.log(obj[namelist[j]]=0);
+				  	}
+				    for (j in obj) {
+				    	optList.push(j);
+				    }
+				    for(k = 0; k <= optList.length - 1; k++) {
+						$(dropdown).append("<option>" + optList[k] + "</option>");
+					}
+					
 				}
 			})
+
 			
 			$(save).on('click', function(){
 				var JSONObject = {"chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
@@ -116,6 +159,26 @@
 					}
 				});
 
+			});
+
+			$(load).on('click', function() {
+				$.ajax({
+					type: "GET",
+					url: 'api/charts',
+					success: function(loadDat) {
+						var popdat = {};
+						chartVals.length = 0;
+						dataset.length = 0;
+						for(var n = 0; n <= loadDat.length - 1; n++){
+							if(loadDat[n].chartName == $(dropdown).val()){
+								dataset.push(loadDat[n]);
+								mkPic();
+							}
+							
+						}
+
+					}
+				});
 			});
 			$(dat).click(addDat);
 			$(reset).click(resetChart);
