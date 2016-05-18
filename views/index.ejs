@@ -26,11 +26,12 @@
 		</form>
 			<button type="rerender" id="dat">Add</button>
 			<button type="render" id="reset">Reset</button>
-			<button type="indicat" id="mongo">Mongo</button>
+			
 			<select id="dropdown">
 
 			</select>
 			<button id="load">Load</button>
+			<button type="indicat" id="del">Delete</button>
 			<div id="chart"><div>
 			<div id="chartTwo"><div>
 		<script >
@@ -43,8 +44,9 @@
 			var $dropdown = $(dropdown);
 			var namelist = [];
 			var optList = [];
-			//Load Graph Vars
+			//Load vals
 			var chartVals = [];
+			
 
 			var dataset = [];
 			var width = 360;
@@ -126,7 +128,7 @@
 					k,
 				    obj={};
 
-					for(var i = 0; i <= chartdat.length - 1; i++){
+					for(i = 0; i <= chartdat.length - 1; i++){
 						console.log(namelist.push(chartdat[i].chartName));
 					}
 					for (j=0;j<namelist.length;j++) {
@@ -160,6 +162,39 @@
 				});
 
 			});
+
+			$(del).on('click', function() {
+				var dat = [];
+				$.ajax({
+					type: "GET",
+					url: "api/charts",
+					success: function(delDat){
+						var c;
+						var delVal = $(dropdown).val();
+						dat.length = 0;
+						for(c = 0; c <= delDat.length -1; c++){
+							if(delDat[c].chartName == delVal) {
+								dat.push(delDat[c]._id);
+							}
+							
+						}
+						console.log(dat);
+						for(var t = 0; t <= dat.length - 1; t++){
+							$.ajax({
+								type: "DELETE",
+								url: "api/charts/" + dat[t],
+								success: function() {
+									console.log("Deleted")
+								}
+
+							})
+						}
+					}
+				});
+				
+				
+
+			})
 
 			$(load).on('click', function() {
 				$.ajax({

@@ -15,13 +15,10 @@ var app = express();
 
 
 
-mongoose.connect('mongodb://localhost:27017/activities');
+mongoose.connect('mongodb://localhost/activities');
 
 // view engine setup
-app.use(function(req, res, next) {
-  res.locals.hello = console.log("hello");
-  next();
-})
+
 
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
@@ -38,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect("mongodb://localhost:27017/activities", (err, database) => {
+MongoClient.connect("mongodb://localhost:/activities", (err, database) => {
   if(err) return console.log(err) 
   db = database
   app.listen(3000, function() {
