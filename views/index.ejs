@@ -3,37 +3,47 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Graphy</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-		<style>
-			.legend {
-				font-size: 12px;
-			}
-			rect {
-				stroke-width: 2;
-			}
-		</style>
+		
 	</head>
 	<body>
-		<form actiion="./api/charts" id="myForm">
-			<p>Chart Name </p>
-			<input id="chtNam" type="text" name="chartName"/>
-			<p>Activity Name </p>
-			<input id="nam" type="text" name="activity"/>
-			<p>Hours </p>
-			<input id="hours" type="text" name="duration"/>
-			<button id="save">Save</button>
-		</form>
-			<button type="rerender" id="dat">Add</button>
-			<button type="render" id="reset">Reset</button>
-			
-			<select id="dropdown">
+		<header>
+			<h1>Graphy</h1>
+			<h2>The Activity Grapher</h2>
+		</header>
+		<section class="inpStyles">
+			<form actiion="./api/charts" id="myForm" class="formStyles">
+				<p>Chart Name </p>
+				<input id="chtNam" type="text" name="chartName"/>
+				<p>Activity Name </p>
+				<input id="nam" type="text" name="activity"/>
+				<p>Hours </p>
+				<input id="hours" type="text" name="duration"/>
+				<button id="save" class="btn">Save</button>
+			</form>
+			<article>
+				<article>
+					<button type="rerender" id="dat" class="btn">Add</button>
+					<button type="render" id="reset" class="btn">Reset</button>
+				</article>
+				<article class="api-btn">
+					<button id="load" class="btn">Load</button>
+					<button type="indicat" id="del" class="btn">Delete</button>
+					<select id="dropdown">
+				</article>
+			</article>
 
 			</select>
-			<button id="load">Load</button>
-			<button type="indicat" id="del">Delete</button>
-			<div id="chart"><div>
-			<div id="chartTwo"><div>
+
+
+		</section>
+			<div id="chart" class="chartStyles">
+				<header id="chrt1Head"></header>
+			</div>
+			<div id="chartTwo"></div>
+
 		<script >
 			
 			var $chartName = $(chtNam);
@@ -47,10 +57,10 @@
 			//Load vals
 			var chartVals = [];
 			
-
+			//d3 Code
 			var dataset = [];
-			var width = 360;
-			var height = 360;
+			var width = 460;
+			var height = 250;
 			var radius = Math.min(width, height) / 2;
 
 			var color = d3.scale.category20();
@@ -61,7 +71,7 @@
 				.attr('height', height)
 				.append('g')
 				.attr('id', "pic")
-				.attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')');
+				.attr('transform', 'translate(' + (width / 2.5) + ',' + (height / 2) + ')');
 
 			var arc = d3.svg.arc()
 				.outerRadius(radius);
@@ -70,6 +80,11 @@
 				.value(function(d) { return d.duration; })
 				.sort(null);
 
+			//Legend Code
+			var legendRect = 30;
+			var legendSpacing = 4; 
+
+			
 			
 			function mkPic() {
 				
@@ -82,6 +97,35 @@
 				.attr('fill', function(d, i) {
 					return color(d.data.activity)
 				});
+
+				var legend = svg.selectAll('legend')
+				.data(color.domain())
+				.enter()
+				.append('g')
+				.attr('class', 'legend')
+				.attr('transform', function(d, i) {
+					var height = legendRect + legendSpacing;
+					var offset = height * color.domain().length / 2;
+					var horiz = 4.5 * legendRect;
+					var vert = i * height - offset;
+					return 'translate(' + horiz + ',' + vert + ')';
+				});
+
+				legend.append('rect')
+					.attr('width', legendRect)
+					.attr('height', legendRect)
+					.style('fill', color)
+					.style('stroke', color);
+
+				legend.append('text')
+					.attr('x', legendRect + legendSpacing)
+					.attr('y', legendRect - legendSpacing)
+					.text(function(d){ return d; })
+
+
+				$(chrt1Head).children().remove();
+				$(chrt1Head).append("<h2 class='chartHead'>" + $(dropdown).val() + "</h2>");
+
 			} 
 
 			function addDat() {
@@ -118,6 +162,8 @@
 					$(dropdown).append("<option>" + arr[i] + "</option>")
 				}
 			}
+			
+
 
 			$.ajax({
 				type: 'GET',
@@ -189,6 +235,7 @@
 
 							})
 						}
+
 					}
 				});
 				
@@ -202,15 +249,20 @@
 					url: 'api/charts',
 					success: function(loadDat) {
 						var popdat = {};
+						color = d3.scale.category20();
 						chartVals.length = 0;
 						dataset.length = 0;
 						for(var n = 0; n <= loadDat.length - 1; n++){
 							if(loadDat[n].chartName == $(dropdown).val()){
 								dataset.push(loadDat[n]);
 								mkPic();
+
 							}
 							
 						}
+						
+						color.domain().length = 0; 
+
 
 					}
 				});
