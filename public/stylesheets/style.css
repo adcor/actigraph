@@ -1,10 +1,24 @@
 body {
-  padding: 50px;
+  padding: 0px;
+  margin: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+header {
+	margin: 0px;
+	padding: 0px;
+}
+
+.headStyles {
+	margin: 0px;
+	padding: 10px 0px 10px 0px;
+	color: white;
+	text-align: center;
+	background-color: #BC1919;
 }
 
 .btn {
@@ -59,10 +73,15 @@ a {
 	float: left;
 }
 
+
+
 .chartStyles {
 	float: left;
+	margin: 5px;
 	
 }
+
+
 .chartHead {
 	text-align: center;
 }
@@ -70,4 +89,24 @@ a {
 .api-btn {
 	display: block;
 	float: left;
+}
+
+.bar {
+  fill: #006600  ;
+}
+
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
 }
