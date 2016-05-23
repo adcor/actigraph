@@ -34,14 +34,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect('mongodb://heroku_lfhsrqfb:pp0std56oqparml9b8ht25lllu@ds011933.mlab.com:11933/heroku_lfhsrqfb', (err, database) => {
+/* MongoClient.connect('mongodb://heroku_lfhsrqfb:pp0std56oqparml9b8ht25lllu@ds011933.mlab.com:11933/heroku_lfhsrqfb', (err, database) => {
   if(err) return console.log(err) 
   db = database
   app.listen(3000, function() {
   console.log('listening on 3000');
   })
   
-})
+}) */
 
 
 app.use('/', routes);
