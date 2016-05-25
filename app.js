@@ -20,11 +20,11 @@ mongoose.connect('mongodb://unsio:labtest@ds051750.mlab.com:51750/activities');
 
 app.set('port', (process.env.PORT || 3000));
 app.set('view engine', 'ejs');
-app.get('/', function(request, response) {
+/*app.get('/', function(request, response) {
     res.render('index');
 }).listen(app.get('port'), function() {
     console.log('App is running, server is listening on port ', app.get('port'));
-});
+});*/
 
 
 //this worked before making above get change
