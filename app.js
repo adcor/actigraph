@@ -28,9 +28,9 @@ app.set('view engine', 'ejs');
 
 
 //this worked before making above get change
-/*app.get('/', function(req, res) {
+app.get('/', function(req, res) {
   res.render('index')
-})*/
+})
 
 
 
