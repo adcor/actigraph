@@ -18,7 +18,7 @@ mongoose.connect('mongodb://unsio:labtest@ds051750.mlab.com:51750/activities');
 
 // view engine setup
 
-
+app.set('port', (process.env.PORT || 3000));
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
   res.render('index')
