@@ -15,7 +15,7 @@ header {
 
 .headStyles {
 	margin: 0px;
-	padding: 10px 0px 10px 0px;
+	padding: 5px 0px 5px 0px;
 	color: white;
 	text-align: center;
 	background-color: #BC1919;
@@ -74,7 +74,24 @@ header {
 }
 
 
+/*Dropdown Styles*/
 
+ .scrollable{
+   overflow-y: auto;
+   overflow: none;
+   width: 150px;
+    /* adjust height depending on number of options to display */
+   border: 1px silver solid;
+   display: inline-block;
+
+ }
+
+ .scrollable select {
+ 	border: none;
+ }
+
+
+/*Styles for charts */
 .chartStyles {
 	float: left;
 	margin: 5px;

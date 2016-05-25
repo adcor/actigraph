@@ -12,12 +12,12 @@
 		<header class="headStyles">
 			<h1 class="headStyles">Actigraph</h1>
 			<h2>The Activity Grapher</h2>
-			<p>Use the save button to save and add data to your charts. </br>Use the Add button to add data to a chart renderred on the right. </br> Use the reset button to remove information from the rendering area. </br>Use the drop down to select a save chart to either load or delete using the indicated buttons. </p>
+			<p>Start by naming your chart. </br>Use timescales like days and weeks as a naming convention. </br>Use the save button to save and add data to your charts. </br>Use the Add button to add data to a chart renderred on the right. </br> Use the reset button to remove information from the rendering area. </br>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </p>
 		</header>
 		<section class="inpStyles">
 			<form actiion="./api/charts" id="myForm" class="formStyles">
 				<header class="headStyles"></header>
-				<p>Type in the name of your chart </br><i>e.g. mm/dd/yyyy</i> </p>
+				<p>Type in the name of your chart </br><i>e.g. mm/dd/yyyy, Feb 2016</i> </p>
 				<input id="chtNam" type="text" name="chartName"/>
 				<p>Add an activity </p>
 				<input id="nam" type="text" name="activity"/>
@@ -28,13 +28,15 @@
 			<article>
 				
 				<article>
-					<button id="load" class="btn">Load</button>
-					<button type="indicat" id="del" class="btn">Delete</button>
-					<select id="dropdown"></select>
-				</article>
-				<article class="api-btn">
 					<button type="rerender" id="dat" class="btn">Add</button>
 					<button type="render" id="reset" class="btn">Reset</button>
+					<select id="dropdown" onmousedown="if(this.options.length>3){this.size=2;}"  onchange='this.size=0;' onblur="this.size=0;">
+
+					</select>
+				</article>
+				<article class="api-btn">
+					<button id="load" class="btn">Load</button>
+					<button type="indicat" id="del" class="btn">Delete</button>
 				</article>
 			</article>
 

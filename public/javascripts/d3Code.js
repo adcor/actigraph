@@ -235,9 +235,6 @@ var $chartName = $(chtNam);
 					data: JSONObject,
 					success: function(newChart) {
 						console.log("We win");
-					},
-					error: function(){
-						alert('error posting');
 					}
 				});
 
