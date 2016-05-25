@@ -27,7 +27,8 @@ var $chartName = $(chtNam);
 				.attr('transform', 'translate(' + (width / 2.5) + ',' + (height / 2) + ')');
 
 			var arc = d3.svg.arc()
-				.outerRadius(radius);
+				.outerRadius(radius)
+				.innerRadius(radius / 1.8);
 
 			var pie = d3.layout.pie()
 				.value(function(d) { return d.duration; })

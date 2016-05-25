@@ -76,19 +76,9 @@ header {
 
 /*Dropdown Styles*/
 
- .scrollable{
-   overflow-y: auto;
-   overflow: none;
-   width: 150px;
-    /* adjust height depending on number of options to display */
-   border: 1px silver solid;
-   display: inline-block;
-
- }
-
- .scrollable select {
- 	border: none;
- }
+#dropdown {
+	font-size: 15px;
+}
 
 
 /*Styles for charts */
