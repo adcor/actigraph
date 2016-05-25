@@ -14,8 +14,8 @@ var app = express();
 
 
 
-//mongoose.connect('mongodb://localhost/activities');
- mongoose.connect('mongodb://heroku_lfhsrqfb:pp0std56oqparml9b8ht25lllu@ds011933.mlab.com:11933/heroku_lfhsrqfb')
+mongoose.connect('mongodb://unsio:labtest@ds051750.mlab.com:51750/activities');
+
 // view engine setup
 
 
@@ -34,14 +34,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* MongoClient.connect('mongodb://heroku_lfhsrqfb:pp0std56oqparml9b8ht25lllu@ds011933.mlab.com:11933/heroku_lfhsrqfb', (err, database) => {
+MongoClient.connect('mongodb://unsio:labtest@ds051750.mlab.com:51750/activities', (err, database) => {
   if(err) return console.log(err) 
   db = database
   app.listen(3000, function() {
   console.log('listening on 3000');
   })
   
-}) */
+})
 
 
 app.use('/', routes);
@@ -127,7 +127,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-module.exports = app;
+module.exports = app; 
 
 
 
