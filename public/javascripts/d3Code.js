@@ -296,6 +296,22 @@ var $chartName = $(chtNam);
 						var popdat = {};
 						color = d3.scale.category20();
 						dataset.length = 0;
+						var i,
+						j,
+						k,
+					    obj={};
+
+						for(i = 0; i <= loadDat.length - 1; i++){
+							if(loadDat[i].creator === $username){
+								console.log(namelist.push(loadDat[i].chartName));
+							}
+						}
+						for (j=0;j<namelist.length;j++) {
+				    		console.log(obj[namelist[j]]=0);
+					  	}
+					    for (j in obj) {
+					    	optList.push(j);
+					    }
 						for(var n = 0; n <= loadDat.length - 1; n++){
 							if(loadDat[n].chartName == $(chtNam).val()){
 								dataset.push(loadDat[n]);
