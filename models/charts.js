@@ -6,6 +6,7 @@ var mongoose = restful.mongoose;
 
 //Schema
 var chartSchema = new mongoose.Schema({
+	creator: String,
 	chartName: String,
 	activity: String,
 	duration: Number

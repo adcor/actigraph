@@ -2,6 +2,7 @@ var $chartName = $(chtNam);
 			var $activityName = $(nam);
 			var $hours = $(hours);
 			var $chartTwo = $(chartTwo);
+			var $username = nameMatch();
 			//Dropdown Vars
 			var $dropdown = $(dropdown);
 			var namelist = [];
@@ -197,8 +198,19 @@ var $chartName = $(chtNam);
 					$(dropdown).append("<option>" + arr[i] + "</option>")
 				}
 			}
-			
 
+			function nameMatch(){
+				var nameArr = $(username).html().split("");
+				var res = [];
+				for(var i = 10; i <= nameArr.length; i++){
+					res.push(nameArr[i]);
+				}
+				res = res.join("");
+				return res;
+			}
+
+
+			
 
 			$.ajax({
 				type: 'GET',
@@ -210,7 +222,9 @@ var $chartName = $(chtNam);
 				    obj={};
 
 					for(i = 0; i <= chartdat.length - 1; i++){
-						console.log(namelist.push(chartdat[i].chartName));
+						if(chartdat[i].creator === $username){
+							console.log(namelist.push(chartdat[i].chartName));
+						}
 					}
 					for (j=0;j<namelist.length;j++) {
 			    		console.log(obj[namelist[j]]=0);
@@ -221,13 +235,45 @@ var $chartName = $(chtNam);
 				    for(k = 0; k <= optList.length - 1; k++) {
 						$(dropdown).append("<option>" + optList[k] + "</option>");
 					}
+					$(chtNam).val(optList[-1]);
 					
 				}
 			})
+			var substringMatcher = function(strs) {
+				return function findMatches(q, cb) {
+				var matches, substringRegex;
+
+				// an array that will be populated with substring matches
+				matches = [];
+
+				// regex used to determine if a string contains the substring `q`
+				substrRegex = new RegExp(q, 'i');
+
+				// iterate through the pool of strings and for any string that
+				// contains the substring `q`, add it to the `matches` array
+				$.each(strs, function(i, str) {
+				  if (substrRegex.test(str)) {
+				    matches.push(str);
+				  }
+				});
+
+				cb(matches);
+				};
+			};
+
+			$('.typeahead').typeahead({
+				hint: true,
+				highlight: true,
+				minLength: 1
+			},
+			{
+				name: 'optlist',
+				source: substringMatcher(optList)
+			});
 
 			
 			$(save).on('click', function(){
-				var JSONObject = {"chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
+				var JSONObject = {"creator": $username, "chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
 
 				$.ajax({
 					type: "POST",
@@ -235,9 +281,40 @@ var $chartName = $(chtNam);
 					dataType: 'json',
 					data: JSONObject,
 					success: function(newChart) {
+						if(optList.indexOf(JSONObject.chartName) == -1){
+							$(dropdown).append("<option>" + JSONObject.chartName + "</option>");
+						}
+						console.log(JSONObject.chartName)
 						console.log("We win");
 					}
 				});
+
+				$.ajax({
+					type: "GET",
+					url: 'api/charts',
+					success: function(loadDat) {
+						var popdat = {};
+						color = d3.scale.category20();
+						dataset.length = 0;
+						for(var n = 0; n <= loadDat.length - 1; n++){
+							if(loadDat[n].chartName == $(chtNam).val()){
+								dataset.push(loadDat[n]);
+								
+							}
+							
+						}
+						mkPic();
+						$(".chrt1Head").children().remove();
+						$(".chrt1Head").append("<h2 class='chartHead'>" + $(chtNam).val() + "</h2>");
+
+						color.domain().length = 0; 
+
+
+					}
+
+
+				});
+
 
 			});
 
@@ -267,7 +344,13 @@ var $chartName = $(chtNam);
 
 							})
 						}
-						location.reload();
+						for(var m = 0; m <= optList.length; m++){
+							if(optList[m] == delVal){
+								optList.splice(m);
+							}
+						}
+						$("#dropdown :selected").remove();
+
 
 					}
 
@@ -301,5 +384,3 @@ var $chartName = $(chtNam);
 
 				});
 			});
-			$(dat).click(addDat);
-			$(reset).click(resetChart);

@@ -13,13 +13,78 @@ header {
 	padding: 0px;
 }
 
+.indexStyles {
+	background-color: #44170b;
+	padding-right: auto;
+	padding-right: auto;
+}
+
+.group{
+	text-align: center;
+	vertical-align: top;
+	width: 20em;
+	margin: 0 auto;
+	position: relative;
+	overflow: auto;
+	display: inline-block;
+}
+.home-btn{
+	display: inline-block;
+	position: relative;
+	float: left;
+	margin-top: .9em;
+	margin-left: 2em;
+	margin-right: 0px;
+}
+.home-btn2{
+	margin-left: 0em;
+}
+
+.jumbotron{
+	margin: 15em auto;
+	width: 40em;
+	align-self: center;
+	display: block;
+}
+
 .headStyles {
 	margin: 0px;
 	padding: 5px 0px 5px 0px;
 	color: white;
 	text-align: center;
 	background-color: #BC1919;
+	width: 100%;
+
+	display: inline-block;
 }
+
+.headStyle {
+	padding: 0px 90px 0px 0px;
+	display: inline-block;
+	margin: 0px;
+	position: relative;
+	clear: left;
+}
+
+.left {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	clear: right;
+}
+
+.outStyle {
+	float: right;
+	position: relative;
+	display: inline;
+	border: 2px solid black;
+}
+.lefter {
+	float: left;
+	margin-left: .3em;
+}
+
 
 .btn {
 	-moz-box-shadow:inset 0px 1px 0px 0px #cf866c;
@@ -45,7 +110,7 @@ header {
 	padding:6px 11px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #703c26;
-	margin-top: 5px;
+	
 }
 .btn:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc3315), color-stop(1, #d0451b));
@@ -78,16 +143,24 @@ header {
 
 #dropdown {
 	font-size: 15px;
+	margin-left: .7em;
+	margin-top: .7em;
 }
+
+
 
 
 /*Styles for charts */
 .chartStyles {
 	float: left;
 	margin: 5px;
-	
+	display: inline;
 }
+.allChart {
 
+	display: inline-block;
+	margin: 0px;
+}
 
 .chartHead {
 	text-align: center;
@@ -116,4 +189,38 @@ header {
 
 .x.axis path {
   display: none;
+}
+
+/*typeahead styles */
+
+
+.tt-hint {
+    color: #999;
+}
+
+.tt-menu { 
+    width: 200px;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor { 
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
 }
