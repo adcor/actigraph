@@ -2,7 +2,7 @@ var $chartName = $(chtNam);
 			var $activityName = $(nam);
 			var $hours = $(hours);
 			var $chartTwo = $(chartTwo);
-			var $username = nameMatch();
+			var $username = window.app;
 			//Dropdown Vars
 			var $dropdown = $(dropdown);
 			var namelist = [];

@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<header class="headStyles">
-			<h1 class="left" id="username">Greetings <%= user.username %></h1>
+			<h1 class="left" id="username">Greetings <%= user.username %> </h1>
 			<a href="./logout" class="btn outStyle">Logout</a>
 			<h1 class="headStyle">Actigraph</h1>
 			<h2>The Activity Grapher</h2>
@@ -49,6 +49,9 @@
 			<div id="chartTwo" class="chartStyles">
 			</div>
 		</section>
+		<script>
+			window.user = <%- JSON.stringify(user.username) %>;
+		</script>
 		<script src="/javascripts/d3Code.js"></script>
 		
 	</body>
