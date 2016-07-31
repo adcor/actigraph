@@ -17,6 +17,8 @@ router.get('/', function(req, res, next) {
   res.render('index1', { user: req.user });
 });
 
+
+
 router.get('/app', loggedIn, function(req, res, next) {
 	  res.render('index', { user: req.user });
 });
@@ -26,7 +28,7 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-	Account.register( new Account({ username : req.body.username }), req.body.password, function(err, account) {
+	Account.register( new Account({ username : req.body.username , status: "member"}), req.body.password, function(err, account) {
 		if(err) {
 			return res.render('register', { account: account });
 		}
@@ -41,9 +43,19 @@ router.get('/login', function(req, res) {
 	res.render('login', { user: req.user });
 });
 
+router.get('/manager', function(req, res){
+	res.render('manager', {user: req.user});
+})
+
+router.get('/admin', function(req, res){
+	res.render('admin', {user: req.user});
+})
+
 router.post('/login', passport.authenticate('local'), function(req, res) {
 	res.redirect('/app');
 });
+
+
 
 router.get('/logout', function(req, res) {
 	router.get('/app', function(req, res, next) {
@@ -55,6 +67,10 @@ router.get('/logout', function(req, res) {
 
 router.get('/ping', function(req, res){
 	res.status(200).send("pong!");
+});
+
+router.get('/try', function(req, res, next) {
+  res.render('try', { user: req.user });
 });
 
 module.exports = router;

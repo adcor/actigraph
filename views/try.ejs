@@ -8,11 +8,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/typeahead.bundle.min.js"></script>
 
+
 	</head>
 	<body>
 		<header class="headStyles">
-			<h1 class="left" id="username" >Greetings <%= user.username %> </h1>
-			<a href="./logout" class="btn outStyle">Logout</a>
+			<h1 class="left" id="username" >Welcome Guest </h1>
 			<h1 class="headStyle">Actigraph</h1>
 			<h2>The Activity Grapher</h2>
 			<p>Start by naming your chart. </br>Timescales like days and weeks work well as a naming convention. </br>Use the save button to save and add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) </br>Use the Add button to render charts without saving data</br> Use the reset button to remove information from the rendering area. </br>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </p>
@@ -26,19 +26,16 @@
 				<input id="nam" type="text" name="activity"/>
 				<p>Time spent in hours</p>
 				<input id="hours" type="text" name="duration"/>
-				<button id="save" class="btn" type="button">Save</button>
 			</form>
 
 				
 
 			<article class="api-btn">
-				<button id="load" class="btn lefter">Load</button>
-				<button type="indicat" id="del" class="btn lefter">Delete</button>
-				<select id="dropdown" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
+				<button id="add" class="btn lefter">Add</button>
+				<button type="indicat" id="reset" class="btn lefter">Reset</button>
+				
 
 			</article>
-
-
 			
 
 		</section>
@@ -49,10 +46,9 @@
 			<div id="chartTwo" class="chartStyles">
 			</div>
 		</section>
-		<script>
-			window.user = <%- JSON.stringify(user.username) %>;
-		</script>
-		<script src="/javascripts/d3Code.js"></script>
+		
+		<script src="/javascripts/try.js"></script>
+
 		
 	</body>
 </html>

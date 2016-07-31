@@ -30,11 +30,15 @@
 			</form>
 
 				
+			<article class="api-btn">
+				<button id="loadUserCharts" class="btn lefter">Load User Charts</button>
+				<select id="dropdown" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
 
+			</article>
 			<article class="api-btn">
 				<button id="load" class="btn lefter">Load</button>
 				<button type="indicat" id="del" class="btn lefter">Delete</button>
-				<select id="dropdown" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
+				<select id="userCharts" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
 
 			</article>
 
@@ -52,7 +56,7 @@
 		<script>
 			window.user = <%- JSON.stringify(user.username) %>;
 		</script>
-		<script src="/javascripts/d3Code.js"></script>
+		<script src="/javascripts/manager.js"></script>
 		
 	</body>
 </html>

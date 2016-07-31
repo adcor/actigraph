@@ -13,6 +13,10 @@ header {
 	padding: 0px;
 }
 
+#username{
+	display: block;
+}
+
 .indexStyles {
 	background-color: #44170b;
 	padding-right: auto;
@@ -55,7 +59,7 @@ header {
 	background-color: #BC1919;
 	width: 100%;
 
-	display: inline-block;
+	display: block;
 }
 
 .headStyle {
@@ -122,10 +126,7 @@ header {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bc3315', endColorstr='#d0451b',GradientType=0);
 	background-color:#bc3315;
 }
-.btn:active {
-	position:relative;
-	top:1px;
-}
+
 
 .formStyles {
 	border: 2px solid black;

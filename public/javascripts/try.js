@@ -2,9 +2,7 @@ var $chartName = $(chtNam);
 			var $activityName = $(nam);
 			var $hours = $(hours);
 			var $chartTwo = $(chartTwo);
-			var $username = window.user;
 			//Dropdown Vars
-			var $dropdown = $(dropdown);
 			var namelist = [];
 			var optList = [];
 			//Load vals
@@ -12,22 +10,8 @@ var $chartName = $(chtNam);
 			
 			//d3 Code
 			var dataset = [];
-			var sorter = function(a, b) {
-               if(a.activity < b.activity){
-                 return -1;
-               }
-               if(a.activity > b.activity){
-                 return 1;
-               }
-               return 0;
-               };
 			var width = 440;
 			var height = 230;
-
-			var nesty = d3.nest()
-			                .key(function(){ return d.activity})
-			                .entries(dataset);
-
 			//d3 Pie
 			var radius = Math.min(width, height) / 2;
 
@@ -83,36 +67,7 @@ var $chartName = $(chtNam);
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 				.attr("id", "chrt2");
 
-			//Dataset Formatter
-			function formatter(arr){
-			  var fin = [];
-			  var test = [];
-			  var pusher;
-			  var sorted = arr.sort(function compare(a,b) {
-			    if (a.activity < b.activity)
-			      return -1;
-			    if (a.activity > b.activity)
-			      return 1;
-			    return 0;
-			  });
-			  for(var i = 0; i < arr.length; i++){
-			    if(arr[i+1] === undefined || arr[i].activity === arr[i+1].activity){
-			      test.push(arr[i]);
-			    }
 
-			    else {
-			      test.push(arr[i])
-			      pusher = test.reduce(function(a, b) { return {activity: a.activity, duration: a.duration + b.duration}})
-			      fin.push(pusher);  
-			      test = [];
-			      pusher = [];
-			    }
-			  }
-			  pusher = test.reduce(function(a, b) { return {activity: a.activity, duration: a.duration + b.duration}})
-			  fin.push(pusher);
-			  console.log(sorted);
-			  return fin;
-			}
 			// pie functions
 			function gphPie() {
 				$(pic).children().remove();
@@ -159,7 +114,6 @@ var $chartName = $(chtNam);
 			function domainer(data) {
 				x.domain(data.map(function(d) { return d.activity;}));
 				y.domain([0, d3.max(data, function(d) { return d.duration;})]);
-				console.log(data);
 			}
 			function grphBar() {
 				$(chrt2).children().remove();
@@ -192,7 +146,7 @@ var $chartName = $(chtNam);
 
 			function mkTitle() {
 				$(".chrt1Head").children().remove();
-				$(".chrt1Head").append("<h2 class='chartHead'>" + $(dropdown).val() + "</h2>");
+				$(".chrt1Head").append("<h2 class='chartHead'>" + $(chtNam).val() + "</h2>");
 			}
 
 			function mkPic() {
@@ -203,6 +157,18 @@ var $chartName = $(chtNam);
 
 				
 
+			}
+			function dupLess(arr) {
+				var i,
+			        len=arr.length,
+				    obj={};
+
+				for (i=0;i<len;i++) {
+			    	obj[arr[i]]=0;
+			  	}
+			    for (i in obj) {
+			    	optList.push(i);
+			    }
 			} 
 
 			function addDat() {
@@ -226,7 +192,7 @@ var $chartName = $(chtNam);
 					console.log(dataset);
 
 					for(var i = 0; i < dataset.length; i++){
-						if(dataset[dataset.length - 1].activity === dPop.activity && !last){
+						if(dataset[dataset.length - 1].activity === dPop.activity){
 							break;
 						}
 						else if(dataset[i].activity === dPop.activity ){
@@ -248,24 +214,14 @@ var $chartName = $(chtNam);
 			}
 			function resetChart() {
 				dataset.length = 0;
+				color = d3.scale.category20();
 				$(pic).children().remove();
 				$(chrt2).children().remove();
 				$(".chrt1Head").children().remove();
 			}
 
 
-			function dupLess(arr) {
-				var i,
-			        len=arr.length,
-				    obj={};
 
-				for (i=0;i<len;i++) {
-			    	obj[arr[i]]=0;
-			  	}
-			    for (i in obj) {
-			    	optList.push(i);
-			    }
-			}
 			function mkOpt(arr) {
 				for(var i = 0; i <= arr.length; i++) {
 					$(dropdown).append("<option>" + arr[i] + "</option>")
@@ -285,33 +241,6 @@ var $chartName = $(chtNam);
 
 			
 
-			$.ajax({
-				type: 'GET',
-				url: 'api/charts',
-				success: function(chartdat) {
-					var i,
-					j,
-					k,
-				    obj={};
-
-					for(i = 0; i <= chartdat.length - 1; i++){
-						if(chartdat[i].creator === $username){
-							console.log(namelist.push(chartdat[i].chartName));
-						}
-					}
-					for (j=0;j<namelist.length;j++) {
-			    		console.log(obj[namelist[j]]=0);
-				  	}
-				    for (j in obj) {
-				    	optList.push(j);
-				    }
-				    for(k = 0; k <= optList.length - 1; k++) {
-						$(dropdown).append("<option>" + optList[k] + "</option>");
-					}
-					$(chtNam).val(optList[-1]);
-					
-				}
-			})
 			var substringMatcher = function(strs) {
 				return function findMatches(q, cb) {
 				var matches, substringRegex;
@@ -344,136 +273,8 @@ var $chartName = $(chtNam);
 				source: substringMatcher(optList)
 			});
 
-			$("#add").click(addDat());
-			$("#reset").click(resetChart());
+			$("#add").click(addDat);
+			$("#reset").click(resetChart);
 			
-			$(save).on('click', function(){
-				var JSONObject = {"creator": $username, "chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
-
-				$.ajax({
-					type: "POST",
-					url: 'api/charts',
-					dataType: 'json',
-					data: JSONObject,
-					success: function(newChart) {
-						if(optList.indexOf(JSONObject.chartName) == -1){
-							$(dropdown).append("<option>" + JSONObject.chartName + "</option>");
-						}
-						console.log(JSONObject.chartName)
-						console.log("We win");
-					}
-				});
-
-				$.ajax({
-					type: "GET",
-					url: 'api/charts',
-					success: function(loadDat) {
-						var popdat = {};
-						color = d3.scale.category20();
-						dataset.length = 0;
-						var i,
-						j,
-						k,
-					    obj={};
-
-						for(i = 0; i <= loadDat.length - 1; i++){
-							if(loadDat[i].creator === $username){
-								console.log(namelist.push(loadDat[i].chartName));
-							}
-						}
-						for (j=0;j<namelist.length;j++) {
-				    		console.log(obj[namelist[j]]=0);
-					  	}
-					    for (j in obj) {
-					    	optList.push(j);
-					    }
-						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].chartName == $(chtNam).val()){
-								dataset.push(loadDat[n]);
-								
-							}
-							
-						}
-						dataset = formatter(dataset);
-						mkPic();
-						$(".chrt1Head").children().remove();
-						$(".chrt1Head").append("<h2 class='chartHead'>" + $(chtNam).val() + "</h2>");
-
-						color.domain().length = 0; 
 
 
-					}
-
-
-				});
-
-
-			});
-
-			$(del).on('click', function() {
-				var dat = [];
-				$.ajax({
-					type: "GET",
-					url: "api/charts",
-					success: function(delDat){
-						var c;
-						var delVal = $(dropdown).val();
-						dat.length = 0;
-						for(c = 0; c <= delDat.length -1; c++){
-							if(delDat[c].chartName == delVal) {
-								dat.push(delDat[c]._id);
-							}
-							
-						}
-						console.log(dat);
-						for(var t = 0; t <= dat.length - 1; t++){
-							$.ajax({
-								type: "DELETE",
-								url: "api/charts/" + dat[t],
-								success: function() {
-									console.log("Deleted")
-								}
-
-							})
-						}
-						for(var m = 0; m <= optList.length; m++){
-							if(optList[m] == delVal){
-								optList.splice(m);
-							}
-						}
-						$("#dropdown :selected").remove();
-
-
-					}
-
-				});
-				
-				
-
-			})
-
-			$(load).on('click', function() {
-				$.ajax({
-					type: "GET",
-					url: 'api/charts',
-					success: function(loadDat) {
-						var popdat = {};
-						color = d3.scale.category20();
-						dataset.length = 0;
-						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].chartName == $(dropdown).val()){
-								dataset.push(loadDat[n]);
-								
-							}
-							
-						}
-						dataset = formatter(dataset);
-						mkPic();
-
-						color.domain().length = 0; 
-
-
-					}
-
-				});
-			});

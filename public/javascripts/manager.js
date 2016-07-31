@@ -7,6 +7,9 @@ var $chartName = $(chtNam);
 			var $dropdown = $(dropdown);
 			var namelist = [];
 			var optList = [];
+
+			var memList = [];
+			var chartList = [];
 			//Load vals
 			var chartVals = [];
 			
@@ -192,7 +195,7 @@ var $chartName = $(chtNam);
 
 			function mkTitle() {
 				$(".chrt1Head").children().remove();
-				$(".chrt1Head").append("<h2 class='chartHead'>" + $(dropdown).val() + "</h2>");
+				$(".chrt1Head").append("<h2 class='chartHead'>" + $(userCharts).val() + "</h2>");
 			}
 
 			function mkPic() {
@@ -293,11 +296,11 @@ var $chartName = $(chtNam);
 					j,
 					k,
 				    obj={};
-
-					for(i = 0; i <= chartdat.length - 1; i++){
-						if(chartdat[i].creator === $username){
-							console.log(namelist.push(chartdat[i].chartName));
-						}
+				    $(dropdown).append("<option>" + "all" + "</option>");
+					for(i = 0; i < chartdat.length - 1; i++){
+						
+						console.log(namelist.push(chartdat[i].creator));
+						
 					}
 					for (j=0;j<namelist.length;j++) {
 			    		console.log(obj[namelist[j]]=0);
@@ -305,7 +308,7 @@ var $chartName = $(chtNam);
 				    for (j in obj) {
 				    	optList.push(j);
 				    }
-				    for(k = 0; k <= optList.length - 1; k++) {
+				    for(k = 1; k <= optList.length - 1; k++) {
 						$(dropdown).append("<option>" + optList[k] + "</option>");
 					}
 					$(chtNam).val(optList[-1]);
@@ -410,6 +413,42 @@ var $chartName = $(chtNam);
 
 			});
 
+			$(loadUserCharts).on('click',function() {
+				$.ajax({
+					type: 'GET',
+					url: 'api/charts',
+					success: function(chartdat) {
+						var i,
+						j,
+						k,
+						m,
+						memList = [],
+						chartList = [],
+					    obj={};
+					    $(userCharts).empty();
+						for(i = 0; i <= chartdat.length - 1; i++){
+							if($(dropdown).val() === "all") {
+								memList.push(chartdat[i].chartName);
+							}
+							else if(chartdat[i].creator === $(dropdown).val()){
+								console.log(memList.push(chartdat[i].chartName));
+							}
+						}
+						for (j=0;j<memList.length;j++) {
+				    		console.log(obj[memList[j]]=0);
+					  	}
+					    for (j in obj) {
+					    	chartList.push(j);
+					    }
+					    for(k = 0; k < chartList.length; k++) {
+							$(userCharts).append("<option>" + chartList[k] + "</option>");
+						}
+						$(chtNam).val(chartList[-1]);
+						
+					}
+				});
+			})
+
 			$(del).on('click', function() {
 				var dat = [];
 				$.ajax({
@@ -461,7 +500,7 @@ var $chartName = $(chtNam);
 						color = d3.scale.category20();
 						dataset.length = 0;
 						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].chartName == $(dropdown).val()){
+							if(loadDat[n].chartName == $(userCharts).val()){
 								dataset.push(loadDat[n]);
 								
 							}
