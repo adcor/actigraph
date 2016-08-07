@@ -22,11 +22,6 @@ router.put('/', function(req, res){
 	console.log(req.body);
 })
 
-router.get('/:user', Autho.canDo("view", "administrate"), function(req, res){
-	res.render('admin', {user: req.user});
-})
-
-
 router.get('/logout', function(req, res) {
 	res.redirect('/')
 	
@@ -36,6 +31,13 @@ router.get('/logout', function(req, res) {
 	req.session.destroy();
 	res.render('index1', { });
 });
+
+router.get('/:user', Autho.canDo("view", "administrate"), function(req, res){
+	res.render('admin', {user: req.user});
+})
+
+
+
 
 
 module.exports = router;

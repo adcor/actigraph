@@ -8,10 +8,6 @@ router.get('/', Autho.canDo("view", "manage"), function(req, res){
 	res.redirect('/manager/' + req.user.username, {user: req.user});
 })
 
-router.get('/:user', Autho.canDo("view", "manage"), function(req, res){
-	res.render('manager', {user: req.user});
-})
-
 router.get('/logout', function(req, res) {
 	res.redirect('/')
 	
@@ -21,5 +17,11 @@ router.get('/logout', function(req, res) {
 	req.session.destroy();
 	res.render('index1', { });
 });
+
+router.get('/:user', Autho.canDo("view", "manage"), function(req, res){
+	res.render('manager', {user: req.user});
+})
+
+
 
 module.exports = router;

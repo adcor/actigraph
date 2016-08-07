@@ -12,12 +12,6 @@ router.get('/', Autho.loggedIn, function(req, res, next) {
 	  res.redirect('/app/' + req.user.username);
 });
 
-
-router.get('/:user', Autho.loggedIn, function(req, res, next) {
-	  console.log(req.user);
-	  res.render('index', { user: req.user });
-});
-
 router.get('/logout', function(req, res) {
 	res.redirect('/')
 	
@@ -27,6 +21,13 @@ router.get('/logout', function(req, res) {
 	req.session.destroy();
 	res.render('index1', { });
 });
+
+router.get('/:user', Autho.loggedIn, function(req, res, next) {
+	  console.log(req.user);
+	  res.render('index', { user: req.user });
+});
+
+
 
 
 
