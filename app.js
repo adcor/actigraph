@@ -25,6 +25,15 @@ app.set('view engine', 'ejs');
 
 
 
+/*app.get('/', function(request, response) {
+    res.render('index');
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
+});*/
+
+
+
+
 //this worked before making above get change
 
 
@@ -66,7 +75,19 @@ passport.deserializeUser(Account.deserializeUser());
 
 
 
+app.get('/', function(req, res) {
+  res.render('index');
+});
 
+app.post('/', function(req, res){
+  db.collection('activities').save(req.body, (err,result)=>{
+    if (err) return console.log(err)
+
+    console.log("saved to database ")
+    console.log(req.body)
+    res.redirect('/')
+  })
+})
 
 
 

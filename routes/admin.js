@@ -1,4 +1,8 @@
 var express = require('express');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Account = require('../models/account');
 var router = express.Router();
 var Autho = require('../Authorize/Autho');
 
@@ -25,7 +29,7 @@ router.get('/logout', function(req, res) {
 	res.render('index1', { });
 });
 
-router.put('/', function(req, res){
+router.put('/:user', function(req, res){
 	var query = {"username": req.body.username};
 	var statusUpdate = {$set:{status: req.body.status}}
 	Account.findOneAndUpdate(query, statusUpdate, {upsert: true}, function(err, person){

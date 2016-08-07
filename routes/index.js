@@ -35,6 +35,15 @@ router.get('/', function(req, res, next) {
   res.render('index1', { user: req.user });
 });
 
+router.put('admin/:user', function(req, res){
+	var query = {"username": req.body.username};
+	var statusUpdate = {$set:{status: req.body.status}}
+	Account.findOneAndUpdate(query, statusUpdate, {upsert: true}, function(err, person){
+		console.log(person);
+	})
+	console.log(req.body);
+})
+
 router.use('/app', appRoute);
 router.use('/admin', admin);
 router.use('/manager', manager);
