@@ -1,7 +1,22 @@
 var express = require('express');
 var passport = require('passport');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var Account = require('../models/account');
+var Autho = require('../Authorize/Autho');
+
+//Routes
+var admin = require('./admin');
+var appRoute = require('./appRoute');
+var manager = require('./manager');
+var login = require('./login');
+var register = require('./register');
+var tryRoute = require('./tryRoute');
+
 var router = express.Router();
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 //authenticated function
 function loggedIn(req, res, next) {
@@ -12,65 +27,22 @@ function loggedIn(req, res, next) {
     }
 }
 
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index1', { user: req.user });
 });
 
-
-
-router.get('/app', loggedIn, function(req, res, next) {
-	  res.render('index', { user: req.user });
-});
-
-router.get('/register', function(req, res) {
-	res.render('register', { });
-});
-
-router.post('/register', function(req, res) {
-	Account.register( new Account({ username : req.body.username , status: "member"}), req.body.password, function(err, account) {
-		if(err) {
-			return res.render('register', { account: account });
-		}
-
-		passport.authenticate('local')(req, res, function() {
-			res.redirect('/');
-		});
-	});
-});
-
-router.get('/login', function(req, res) {
-	res.render('login', { user: req.user });
-});
-
-router.get('/manager', function(req, res){
-	res.render('manager', {user: req.user});
-})
-
-router.get('/admin', function(req, res){
-	res.render('admin', {user: req.user});
-})
-
-router.post('/login', passport.authenticate('local'), function(req, res) {
-	res.redirect('/app');
-});
+router.use('/app', appRoute);
+router.use('/admin', admin);
+router.use('/manager', manager);
+router.use('/login', login);
+router.use('/register', register);
+router.use('/try', tryRoute);
 
 
 
-router.get('/logout', function(req, res) {
-	router.get('/app', function(req, res, next) {
-	  res.render('index1', { user: req.user });
-	});
-	req.logout();
-	res.redirect('/');
-});
-
-router.get('/ping', function(req, res){
-	res.status(200).send("pong!");
-});
-
-router.get('/try', function(req, res, next) {
-  res.render('try', { user: req.user });
-});
 
 module.exports = router;

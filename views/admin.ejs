@@ -4,62 +4,118 @@
 		<meta charset="UTF-8">
 		<title>Graphy</title>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/typeahead.bundle.min.js"></script>
 
 	</head>
 	<body>
-		<header class="headStyles">
-			<h1 class="left" id="username" >Greetings <%= user.username %> </h1>
-			<a href="./logout" class="btn outStyle">Logout</a>
-			<h1 class="headStyle">Actigraph</h1>
-			<h2>The Activity Grapher</h2>
-			<p>Start by naming your chart. </br>Timescales like days and weeks work well as a naming convention. </br>Use the save button to save and add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) </br>Use the Add button to render charts without saving data</br> Use the reset button to remove information from the rendering area. </br>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </p>
-		</header>
-		<section class="inpStyles">
-			<form actiion="./api/charts" id="myForm" class="formStyles">
-				<header class="headStyles"></header>
-				<p>Type in the name of your chart </br><i>e.g. mm/dd/yyyy, Feb 2016</i> </p>
-				<input id="chtNam" class="typeahead form-control" type="text" name="chartName"/>
-				<p>Add an activity </p>
-				<input id="nam" type="text" name="activity"/>
-				<p>Time spent in hours</p>
-				<input id="hours" type="text" name="duration"/>
-				<button id="save" class="btn" type="button">Save</button>
-			</form>
+
+		<section class="container">
+		
+			<div class="jumbotron col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+				<a href="./logout" class="btn btn-primary outStyle">Logout</a>
+				<a href="../manager/<%=user.username %>" class="btn btn-primary outStyle">Manage</a>
+				<a href="../app/<%= user.username%>" class="btn btn-primary outStyle">Home</a>
+				<h1>Actigraph
+				<small>The Activity Grapher</small>
+				</h1>
+				<ol>
+					<li>Start by naming your chart.</li> 
+					<li>Timescales like days and weeks work well as a naming convention. </li>
+					<li>Use the save button to save and add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) 
+					<li>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </li>
+				</ol>
+			</div>
+		</section>
+		
+
+		<section  class="container-fluid">
+			<div class="container-fluid" >
+				<div class="row content inline" >
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 sidenav ">
+						<h2 >Greetings <%= user.username %> </h2></br>
+						<section class="inpStyles col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+							<form actiion="../api/charts" id="myForm" class="formStyles col-sm-12 col-md-12 col-xs-12 col-lg-12">
+								<header class="headStyles"></header>
+								<p>Type in the name of your chart </br><i>e.g. mm/dd/yyyy, Feb 2016</i> </p>
+								<input id="chtNam" class="typeahead form-control" type="text" name="chartName"/>
+								<p>Add an activity </p>
+								<input id="nam" type="text" name="activity"/>
+								<p>Time spent in hours</p>
+								<input id="hours" type="text" name="duration"/>
+								<button id="save" class="btn" type="button">Save</button>
+							</form>
+							
+							<article class="dropdown">
+								<h3>Users</h3>
+								<select id="dropdown" class="col-sm-12 col-md-12 col-lg-12 drpDown"onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
+								
+								
+							
+
+							</article>
+							
+							<article class="api-btn col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border: 2px solid black;">
+								<h3> User Charts </h3>
+								<button id="loadUserCharts" class="btn lefter">Load User Charts</button>
+								<button id="load" class="btn btn-primary lefter ">Load</button>
+								
+								<select id="userCharts" class="drpDown" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
+								<button type="indicat" id="del" class="btn lefter">Delete</button>
+			
+
+							</article>
+							<h3>User Status </h3>
+							<button id="changeStatus" class="btn lefter">Change User Status</button>
+							<select id="memberType" class="drpDown col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<option>member</option>
+								<option>manager</option>
+								<option>admin</option>
+							</select>
+							
+
+						</section>
+						
+					</div>
+
 
 				
-			<article class="api-btn">
-				<button id="changeStatus" class="btn lefter">Change User Status</button>
-				<select>
-					<option>Member</option>
-					<option>Manager</option>
-					<option>Admin</option>
-				</select>
-				<button id="loadUserCharts" class="btn lefter">Load User Charts</button>
-				<select id="dropdown" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
-			
+			    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 row-fluid" style="border: 2px solid black" >
 
-			</article>
-			<article class="api-btn">
-				<button id="load" class="btn lefter">Load</button>
-				<button type="indicat" id="del" class="btn lefter">Delete</button>
-				<select id="userCharts" onmousedown="if(this.options.length>3){this.size=3;}"  onchange='this.size=0;' onblur="this.size=0;"></select>
-
-			</article>
-
-
-			
-
-		</section>
-		<section class="allChart">
-			<header class="chrt1Head"></header>
-			<div id="chart" class="chartStyles">
+				  
+				      <div class="row-fluid">					 
+					            
+					        
+				        
+				        <div class="col-sm-7 col-sm-offset-0 col-md-8 col-lg-6">
+				          
+				          <div class="well chartStyles col-lg-12"id="chart" >
+				            <div class="chrt1Head  col-lg-12"  >
+							</div>
+				          </div>
+				        </div>
+				        <div class="col-sm-7 col-sm-offset-0 col-md-8 col-lg-6" >
+				          
+				          <div class="well chartStyles col-lg-12" id="chartTwo">
+				          	<div class="chrt1Head  col-lg-12"  >
+							</div>
+				          
+				          </div>
+					        
+				        </div>
+				     
+			      
+			    </div>
 			</div>
-			<div id="chartTwo" class="chartStyles">
-			</div>
+		  
 		</section>
+
+
+        
 		<script>
 			window.user = <%- JSON.stringify(user.username) %>;
 		</script>

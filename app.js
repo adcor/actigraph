@@ -9,9 +9,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var flash = require('connect-flash');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var api = require('./routes/api');
+
 
 
 var app = express();
@@ -27,20 +25,12 @@ app.set('view engine', 'ejs');
 
 
 
-/*app.get('/', function(request, response) {
-    res.render('index');
-}).listen(app.get('port'), function() {
-    console.log('App is running, server is listening on port ', app.get('port'));
-});*/
-
-
-
-
 //this worked before making above get change
 
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,7 +42,11 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var api = require('./routes/api');
 
 
 app.listen(3000, function() {
@@ -72,19 +66,7 @@ passport.deserializeUser(Account.deserializeUser());
 
 
 
-app.get('/', function(req, res) {
-  res.render('index');
-});
 
-app.post('/', function(req, res){
-  db.collection('activities').save(req.body, (err,result)=>{
-    if (err) return console.log(err)
-
-    console.log("saved to database ")
-    console.log(req.body)
-    res.redirect('/')
-  })
-})
 
 
 

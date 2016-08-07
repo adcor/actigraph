@@ -5,6 +5,7 @@ var $chartName = $(chtNam);
 			var $username = window.user;
 			//Dropdown Vars
 			var $dropdown = $(dropdown);
+
 			var namelist = [];
 			var optList = [];
 
@@ -290,7 +291,7 @@ var $chartName = $(chtNam);
 
 			$.ajax({
 				type: 'GET',
-				url: 'api/charts',
+				url: '../api/charts',
 				success: function(chartdat) {
 					var i,
 					j,
@@ -351,16 +352,16 @@ var $chartName = $(chtNam);
 			$("#reset").click(resetChart());
 			
 			$(save).on('click', function(){
-				var JSONObject = {"creator": $username, "chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
+				var JSONObject = {"creator": $dropdown.val(), "chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
 
 				$.ajax({
 					type: "POST",
-					url: 'api/charts',
+					url: '../api/charts',
 					dataType: 'json',
 					data: JSONObject,
 					success: function(newChart) {
 						if(optList.indexOf(JSONObject.chartName) == -1){
-							$(dropdown).append("<option>" + JSONObject.chartName + "</option>");
+							$(userCharts).append("<option>" + JSONObject.chartName + "</option>");
 						}
 						console.log(JSONObject.chartName)
 						console.log("We win");
@@ -369,7 +370,7 @@ var $chartName = $(chtNam);
 
 				$.ajax({
 					type: "GET",
-					url: 'api/charts',
+					url: '../api/charts',
 					success: function(loadDat) {
 						var popdat = {};
 						color = d3.scale.category20();
@@ -380,7 +381,7 @@ var $chartName = $(chtNam);
 					    obj={};
 
 						for(i = 0; i <= loadDat.length - 1; i++){
-							if(loadDat[i].creator === $username){
+							if(loadDat[i].creator === $dropdown.val()){
 								console.log(namelist.push(loadDat[i].chartName));
 							}
 						}
@@ -416,7 +417,7 @@ var $chartName = $(chtNam);
 			$(loadUserCharts).on('click',function() {
 				$.ajax({
 					type: 'GET',
-					url: 'api/charts',
+					url: '../api/charts',
 					success: function(chartdat) {
 						var i,
 						j,
@@ -449,11 +450,27 @@ var $chartName = $(chtNam);
 				});
 			})
 
+			$(changeStatus).on('click', function() {
+				var JSONObj = {"username": $(dropdown).val(), "status": $(memberType).val()};
+				$.ajax({
+					type: "PUT",
+					url: "admin",
+					dataType: "json",
+					data: JSONObj,
+					success: function(fin){
+						console.log("Status Changed");
+					},
+					error: function() {
+						console.log("not yet");
+					} 
+				})
+			})
+
 			$(del).on('click', function() {
 				var dat = [];
 				$.ajax({
 					type: "GET",
-					url: "api/charts",
+					url: "../api/charts",
 					success: function(delDat){
 						var c;
 						var delVal = $(dropdown).val();
@@ -494,7 +511,7 @@ var $chartName = $(chtNam);
 			$(load).on('click', function() {
 				$.ajax({
 					type: "GET",
-					url: 'api/charts',
+					url: '../api/charts',
 					success: function(loadDat) {
 						var popdat = {};
 						color = d3.scale.category20();

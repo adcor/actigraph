@@ -175,7 +175,7 @@ var $chartName = $(chtNam);
 				var dPop = {};
 				var last;
 				dPop.chartName = $(chtNam).val();
-				if(dPop.chartName != $(".chrt1Head").text()){
+				if(dPop.chartName != $(".namer").text().trim()){
 					resetChart();
 				}
 				dPop.activity = $(nam).val();

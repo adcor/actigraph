@@ -287,7 +287,7 @@ var $chartName = $(chtNam);
 
 			$.ajax({
 				type: 'GET',
-				url: 'api/charts',
+				url: '../api/charts',
 				success: function(chartdat) {
 					var i,
 					j,
@@ -352,7 +352,7 @@ var $chartName = $(chtNam);
 
 				$.ajax({
 					type: "POST",
-					url: 'api/charts',
+					url: '../api/charts',
 					dataType: 'json',
 					data: JSONObject,
 					success: function(newChart) {
@@ -366,7 +366,7 @@ var $chartName = $(chtNam);
 
 				$.ajax({
 					type: "GET",
-					url: 'api/charts',
+					url: '../api/charts',
 					success: function(loadDat) {
 						var popdat = {};
 						color = d3.scale.category20();
@@ -414,7 +414,7 @@ var $chartName = $(chtNam);
 				var dat = [];
 				$.ajax({
 					type: "GET",
-					url: "api/charts",
+					url: "../api/charts",
 					success: function(delDat){
 						var c;
 						var delVal = $(dropdown).val();
@@ -429,7 +429,7 @@ var $chartName = $(chtNam);
 						for(var t = 0; t <= dat.length - 1; t++){
 							$.ajax({
 								type: "DELETE",
-								url: "api/charts/" + dat[t],
+								url: "../api/charts/" + dat[t],
 								success: function() {
 									console.log("Deleted")
 								}
@@ -455,7 +455,7 @@ var $chartName = $(chtNam);
 			$(load).on('click', function() {
 				$.ajax({
 					type: "GET",
-					url: 'api/charts',
+					url: '../api/charts',
 					success: function(loadDat) {
 						var popdat = {};
 						color = d3.scale.category20();

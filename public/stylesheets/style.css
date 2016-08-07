@@ -13,6 +13,7 @@ header {
 	padding: 0px;
 }
 
+
 #username{
 	display: block;
 }
@@ -45,7 +46,7 @@ header {
 }
 
 .jumbotron{
-	margin: 15em auto;
+	
 	width: 40em;
 	align-self: center;
 	display: block;
@@ -60,6 +61,14 @@ header {
 	width: 100%;
 
 	display: block;
+}
+.headStyles ol{
+	text-align: left;
+	font-size: 1.15em;
+}
+
+.headStyles small{
+	color: seashell;
 }
 
 .headStyle {
@@ -86,7 +95,10 @@ header {
 }
 .lefter {
 	float: left;
-	margin-left: .3em;
+	margin: .3em;
+
+
+	
 }
 
 
@@ -141,11 +153,23 @@ header {
 
 
 /*Dropdown Styles*/
+.drpDown {
+	display: inline;
+	margin: .3em;
+	font-family: georgia;
+	height: 2em;
+	width: 100%;
+	font-size: 1.2em;
+}
+
+.drpDown option {
+	height: 2em;
+	font-size: 1.2em;
+}
 
 #dropdown {
-	font-size: 15px;
-	margin-left: .7em;
-	margin-top: .7em;
+	
+	
 }
 
 
@@ -168,6 +192,8 @@ header {
 }
 
 .api-btn {
+	margin: 0px;
+	padding: 20px;
 	display: block;
 	float: left;
 }

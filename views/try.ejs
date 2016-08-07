@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Graphy</title>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/typeahead.bundle.min.js"></script>
@@ -11,11 +12,91 @@
 
 	</head>
 	<body>
-		<header class="headStyles">
-			<h1 class="left" id="username" >Welcome Guest </h1>
+		
+		<section class="container">
+		
+			<div class="jumbotron col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<a href="./" class="btn btn-primary outStyle">Home</a>
+				<a href="./register" class="btn btn-success outStyle">Register</a>
+				<h1>Actigraph
+				<small>The Activity Grapher</small>
+				</h1>
+				<p>Join in order to save you charts</p>
+				<ol>
+					<li>Start by naming your chart.</li> 
+					<li>Timescales like days and weeks work well as a naming convention. </li>
+					<li>Use the save button to save and add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) 
+					<li>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </li>
+				</ol>
+			</div>
+		</section>
+		
+
+		<section  class="container-fluid">
+			<div class="container-fluid" >
+				<div class="row content inline" >
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 sidenav ">
+						<h1 class="left" id="username" >Welcome Guest </h1>
+						<section class="inpStyles col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+							<form actiion="./api/charts" id="myForm" class="formStyles col-sm-12 col-md-12 col-xs-12 col-lg-12">
+								<header class="headStyles"></header>
+								<p>Type in the name of your chart </br><i>e.g. mm/dd/yyyy, Feb 2016</i> </p>
+								<input id="chtNam" class="typeahead form-control" type="text" name="chartName"/>
+								<p>Add an activity </p>
+								<input id="nam" type="text" name="activity"/>
+								<p>Time spent in hours</p>
+								<input id="hours" type="text" name="duration"/>
+								
+							</form>
+							
+							<article class="api-btn col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border: 2px solid black;">
+								<button id="add" class="btn btn-primary lefter ">Add</button>
+								<button type="indicat" id="reset" class="btn lefter">Reset</button>
+								
+
+							</article>
+
+						</section>
+						
+					</div>
+
+
+				
+			    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 row-fluid" style="border: 2px solid black" >
+
+				  
+				      <div class="row-fluid">					 
+					            
+					        
+				        
+				        <div class="col-sm-7 col-sm-offset-0 col-md-8 col-lg-6">
+				          
+				          <div class="well chartStyles col-lg-12"id="chart" >
+				            <div class="chrt1Head namer col-lg-12"  >
+							</div>
+				          </div>
+				        </div>
+				        <div class="col-sm-7 col-sm-offset-0 col-md-8 col-lg-6" >
+				          
+				          <div class="well chartStyles col-lg-12" id="chartTwo">
+				          	<div class="chrt1Head  col-lg-12"  >
+							</div>
+				          
+				          </div>
+					        
+				        </div>
+				     
+			      
+			    </div>
+			</div>
+		  
+		</section>
+	--><!--
+	    <header class="headStyles">
+			<h1 class="left" id="username" >Welcome Guest </h1> </br>
 			<h1 class="headStyle">Actigraph</h1>
 			<h2>The Activity Grapher</h2>
-			<p>Start by naming your chart. </br>Timescales like days and weeks work well as a naming convention. </br>Use the save button to save and add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) </br>Use the Add button to render charts without saving data</br> Use the reset button to remove information from the rendering area. </br>Use the drop down to select a saved chart to either load or delete using the indicated buttons. </p>
+			<p>Start by naming your chart. </br>Timescales like days and weeks work well as a naming convention. </br>Use the add button to add data to your charts. </br>(Just use the same name when you save data to add it to an existing chart.) Use the reset button to remove information from the rendering area. </p>
 		</header>
 		<section class="inpStyles">
 			<form actiion="./api/charts" id="myForm" class="formStyles">
@@ -46,7 +127,7 @@
 			<div id="chartTwo" class="chartStyles">
 			</div>
 		</section>
-		
+		-->
 		<script src="/javascripts/try.js"></script>
 
 		
