@@ -1,4 +1,8 @@
 var express = require('express');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Account = require('../models/account');
 var router = express.Router();
 var Autho = require('../Authorize/Autho');
 
