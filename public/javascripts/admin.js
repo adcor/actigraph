@@ -454,7 +454,7 @@ var $chartName = $(chtNam);
 				var JSONObj = {"username": $(dropdown).val(), "status": $(memberType).val()};
 				$.ajax({
 					type: "PUT",
-					url: ".",
+					url: "../admin",
 					dataType: "json",
 					data: JSONObj,
 					success: function(fin){
