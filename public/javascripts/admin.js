@@ -392,7 +392,7 @@ var $chartName = $(chtNam);
 					    	optList.push(j);
 					    }
 						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].chartName == $(chtNam).val()){
+							if(loadDat[n].creator == $(dropdown).val() && loadDat[n].chartName == $(userCharts).val()){
 								dataset.push(loadDat[n]);
 								
 							}
@@ -517,7 +517,7 @@ var $chartName = $(chtNam);
 						color = d3.scale.category20();
 						dataset.length = 0;
 						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].chartName == $(userCharts).val()){
+							if(loadDat[n].creator == $(dropdown).val() && loadDat[n].chartName == $(userCharts).val()){
 								dataset.push(loadDat[n]);
 								
 							}
