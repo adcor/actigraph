@@ -388,7 +388,7 @@ var $chartName = $(chtNam);
 					    	optList.push(j);
 					    }
 						for(var n = 0; n <= loadDat.length - 1; n++){
-							if(loadDat[n].creator == $username && loadDat[n].chartName == $(dropdown).val()){
+							if(loadDat[n].creator == $username && loadDat[n].chartName == $(chtNam).val()){
 								dataset.push(loadDat[n]);
 								
 							}
