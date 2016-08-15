@@ -54,7 +54,7 @@ var $chartName = $(chtNam);
 			var legendRect = 30;
 			var legendSpacing = 4; 
 
-			//d3 Bar
+			//variables related to bar chart
 			var margin = {top: 20, right: 20, bottom: 30, left: 40},
 				barwidth = width - margin.left - margin.right,
 				barheight = height - margin.top - margin.bottom;
@@ -83,7 +83,9 @@ var $chartName = $(chtNam);
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 				.attr("id", "chrt2");
 
-			//Dataset Formatter
+			/*Dataset Formatter: sorts charts alphabetically and 
+			  reduces all instances of charts with the same name 
+			  into a single instance with combined data.*/
 			function formatter(arr){
 			  var fin = [];
 			  var test = [];
@@ -155,12 +157,15 @@ var $chartName = $(chtNam);
 				mkLeg();
 			}
 
-			//bar functions
+			//Bar Functions
+			//Creates the domain for the bar chart.
 			function domainer(data) {
 				x.domain(data.map(function(d) { return d.activity;}));
 				y.domain([0, d3.max(data, function(d) { return d.duration;})]);
 				console.log(data);
 			}
+
+			//Graphs the bar chart using the domainer function.
 			function grphBar() {
 				$(chrt2).children().remove();
 				domainer(dataset);
@@ -168,6 +173,7 @@ var $chartName = $(chtNam);
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + barheight + ")")
 					.call(xAxis);
+
 
 				chart2.append("g")
 					.attr("class", "y axis")
@@ -346,7 +352,9 @@ var $chartName = $(chtNam);
 
 			$("#add").click(addDat());
 			$("#reset").click(resetChart());
-			
+
+
+			//Saves charts to database
 			$(save).on('click', function(){
 				var JSONObject = {"creator": $username, "chartName": $chartName.val(), "activity": $activityName.val(), "duration": $hours.val()};
 
@@ -410,6 +418,7 @@ var $chartName = $(chtNam);
 
 			});
 
+			//Deletes chart from database
 			$(del).on('click', function() {
 				var dat = [];
 				$.ajax({

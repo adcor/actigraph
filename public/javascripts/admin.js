@@ -298,7 +298,7 @@ var $chartName = $(chtNam);
 					k,
 				    obj={};
 				    $(dropdown).append("<option>" + "all" + "</option>");
-					for(i = 0; i < chartdat.length - 1; i++){
+					for(i = 0; i < chartdat.length; i++){
 						
 						console.log(namelist.push(chartdat[i].creator));
 						
